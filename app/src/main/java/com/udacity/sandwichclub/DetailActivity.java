@@ -19,6 +19,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
