@@ -12,6 +12,10 @@
 
     <!-- Error messages-->
     <string name="detail_error_message">Sandwich data not available</string>
+    <string name="place_holder_not_specified">(Not specified)</string>
+    <string name="place_holder_no_other_name">(no other name)</string>
+    <string name="catalog_action_bar_header">Sandwich Catalog</string>
+    <string name="detail_action_bar_header">Detail Activity</string>
 
     <string-array name="sandwich_names">
         <item>Ham and cheese sandwich</item>
