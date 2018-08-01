@@ -33,6 +33,7 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/text_16sp"
                 style="@style/sectionHeaderStyle"
+                android:layout_marginTop="@dimen/dimen_5dp"
                 android:layout_marginBottom="@dimen/dimen_10dp"
                 android:lineSpacingExtra="@dimen/dimen_5dp"/>
 

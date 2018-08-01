@@ -2,6 +2,7 @@ package com.udacity.sandwichclub;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +77,12 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
@@ -94,26 +101,33 @@ public class DetailActivity extends AppCompatActivity {
             mainNameTextView.setText(sandwich.getMainName());
 
             //set other names
-            populateTextView(sandwich.getAlsoKnownAs(), alsoKnownAsTextView);
+            populateTextView(sandwich.getAlsoKnownAs(), alsoKnownAsTextView, getString(R.string.place_holder_no_other_name));
 
             //set origin
-            originTextView.setText(sandwich.getPlaceOfOrigin());
+            originTextView.setText(sandwich.getPlaceOfOrigin().equalsIgnoreCase("") ?
+                    getString(R.string.place_holder_not_specified) : sandwich.getPlaceOfOrigin());
 
             //set description
             descriptionTextView.setText(sandwich.getDescription());
 
             //set ingredient(s)
-            populateTextView(sandwich.getIngredients(), ingredientsTextView);
+            populateTextView(sandwich.getIngredients(), ingredientsTextView, getString(R.string.place_holder_not_specified));
         }
     }
 
-    private void populateTextView(List<String> alsoKnownAs, TextView currentTextView) {
-        for(String name : alsoKnownAs)
-            currentTextView.append(name + ", ");
+    private void populateTextView(List<String> alsoKnownAs, TextView currentTextView, String emptyStateValue) {
+        for(int count = 0; count < alsoKnownAs.size(); count++) {
+            currentTextView.append(alsoKnownAs.get(count));
 
+            //separate items reasonably
+            if(count == alsoKnownAs.size() - 2 && alsoKnownAs.size() > 1)
+                currentTextView.append(" and ");
+            else if(count < alsoKnownAs.size() - 1)
+                currentTextView.append(", ");
+        }
+
+        //ensure a proper empty state text and as when due
         if(alsoKnownAs.size() == 0)
-            currentTextView.setText(R.string.place_holder_no_other_name);
-        else
-            currentTextView.append(".");
+            currentTextView.setText(emptyStateValue);
     }
 }
